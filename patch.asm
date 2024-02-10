@@ -129,7 +129,5 @@ IS_MUSIC_FUNCTION:									; Walks through MUSIC_LIST to check whether the given
 	movem.l	(sp)+,a0
 	rts
 
-
-
 MUSIC_LIST:
 	dc.b _MUS_Castle, _MUS_Rookery, _MUS_Subway, _MUS_Titlepage, _MUS_Rooftops, _MUS_Continue, _MUS_Forge, _MUS_Boss, _MUS_GameOver, _MUS_Hammer, _MUS_StoryScreen, $FF
