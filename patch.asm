@@ -16,6 +16,7 @@
 	_MUS_StoryScreen:				equ	$48 ; 72 CUE: 11 Sound test: 09 | LOOP
 
 	OFFSET_RESET_VECTOR:			equ $4
+	OFFSET_COLD_RESET_GAME:			equ $0008AE
 	OFFSET_GEMS_START_SONG:			equ $0C14A6
 	OFFSET_GEMS_STOP_SONG:			equ $0C14C4
 	OFFSET_GEMS_PAUSE_ALL:			equ $0C14E2
@@ -45,6 +46,9 @@
 
 	org OFFSET_GEMS_STOP_ALL
 	jsr DETOUR_STOP_COMMAND_HANDLER
+
+	org OFFSET_COLD_RESET_GAME
+	jmp DETOUR_COLD_RESET_GAME
 
 ; Detours: -----------------------------------------------------------------------------------
 	org $2FA080
@@ -95,6 +99,10 @@ DETOUR_RESUME_COMMAND_HANDLER
 	move.w	#$1400,d0
 	jsr		WRITE_MD_PLUS_FUNCTION
 	jmp		OFFSET_GEMS_STD_SETUP
+
+DETOUR_COLD_RESET_GAME
+	move.w	#$2700,sr
+	lea		$fff4d4,a7								; Set stack pointer
 
 DETOUR_RESET_VECTOR
 	move.w	#$1300,d0								; Move MD+ stop command into d1
